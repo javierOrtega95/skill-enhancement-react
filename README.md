@@ -7,3 +7,4 @@
 ## ⌨️ Projects
 
 - 01: [Twitter Follow Card](projects/01-twitter-follow-card/)
+- 02: [Mouse Follower](projects/02-mouse-follower)
