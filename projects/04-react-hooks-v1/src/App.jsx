@@ -1,35 +1,14 @@
-import { useEffect, useState, useRef } from 'react';
-// import { useRef } from 'react';
+import { useState } from 'react';
 import './App.css';
 import { Movies } from './components/Movies';
 import { useMovies } from './hooks/useMovies';
-
-function useSearch() {
-  const [search, updateSearch] = useState('');
-  const [error, setError] = useState(null);
-  const isFirstInput = useRef(true);
-
-  useEffect(() => {
-    if (isFirstInput.current) {
-      isFirstInput.current = search === '';
-      return;
-    }
-
-    if (search === '') {
-      setError('Please enter a movie');
-      return;
-    }
-
-    setError(null);
-  }, [search]);
-
-  return { search, updateSearch, error };
-}
+import { useSearch } from './hooks/useSearch';
 
 function App() {
-  const { movies } = useMovies();
-  const { search, updateSearch, error } = useSearch();
+  const [sort, setSort] = useState(false);
 
+  const { search, updateSearch, error } = useSearch();
+  const { movies, getMovies } = useMovies({ search, sort });
   // const inputRef = useRef();
 
   const handleChange = event => {
@@ -41,11 +20,20 @@ function App() {
     updateSearch(newSearch);
   };
 
+  const handleSubmit = event => {
+    event.preventDefault();
+    getMovies({ search });
+  };
+
+  const handleSort = () => {
+    setSort(!sort);
+  };
+
   return (
     <div className='page'>
       <header>
-        <h1>Movies finder</h1>
-        <form className='form'>
+        <h1>Movie search</h1>
+        <form className='form' onSubmit={handleSubmit}>
           <input
             onChange={handleChange}
             value={search}
@@ -56,6 +44,15 @@ function App() {
               borderColor: error ? 'red' : 'transparent',
             }}
           />
+          <div>
+            <input
+              id='orderByTitle'
+              type='checkbox'
+              onChange={handleSort}
+              checked={sort}
+            />
+            <label htmlFor='orderByTitle'>Order by title</label>
+          </div>
           <button type='submit'>Search</button>
         </form>
         {error && <p style={{ color: 'red' }}>{error}</p>}

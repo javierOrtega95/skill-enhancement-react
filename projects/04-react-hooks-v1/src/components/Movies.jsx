@@ -13,7 +13,7 @@ export function ListOfMovies({ movies }) {
 }
 
 function NoMoviesResults() {
-  return <p>No movies found!</p>;
+  return <p>No movies to show!</p>;
 }
 
 export function Movies({ movies }) {

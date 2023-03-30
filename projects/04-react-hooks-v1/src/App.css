@@ -17,6 +17,7 @@ form {
   display: flex;
   justify-content: center;
   align-items: center;
+  gap: 12px;
 }
 
 .movies {
@@ -28,7 +29,7 @@ form {
   width: 100%;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 32px;
-  margin-top: 16px;
+  margin-top: 32px;
 }
 
 .movie {
