@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import debounce from 'just-debounce-it';
+import { useCallback, useState } from 'react';
 import './App.css';
 import { Movies } from './components/Movies';
 import { useMovies } from './hooks/useMovies';
@@ -11,6 +12,13 @@ function App() {
   const { movies, getMovies } = useMovies({ search, sort });
   // const inputRef = useRef();
 
+  const debouncedGetMovies = useCallback(
+    debounce(search => {
+      getMovies({ search });
+    }, 300),
+    []
+  );
+
   const handleChange = event => {
     // Controlled vs. Uncontrolled
     // const data = new window.FormData(event.target)
@@ -18,6 +26,7 @@ function App() {
     // const value = inputRef.current.value;
     const newSearch = event.target.value;
     updateSearch(newSearch);
+    debouncedGetMovies(newSearch);
   };
 
   const handleSubmit = event => {
