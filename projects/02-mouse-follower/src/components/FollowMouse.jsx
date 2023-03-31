@@ -1,40 +1,40 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react'
 
 export const FollowMouse = () => {
-  const [enabled, setEnabled] = useState(false);
+  const [enabled, setEnabled] = useState(false)
   const [position, setPosition] = useState({
     x: window.innerWidth / 2,
-    y: window.innerHeight / 2,
-  });
+    y: window.innerHeight / 2
+  })
 
   // pointer move
   useEffect(() => {
-    console.log('effect ', { enabled });
+    console.log('effect ', { enabled })
 
     const handleMove = event => {
-      const { clientX, clientY } = event;
-      setPosition({ x: clientX, y: clientY });
-    };
+      const { clientX, clientY } = event
+      setPosition({ x: clientX, y: clientY })
+    }
 
     if (enabled) {
-      window.addEventListener('pointermove', handleMove);
+      window.addEventListener('pointermove', handleMove)
     }
 
     return () => {
       // cleanup method
-      console.log('cleanup');
-      window.removeEventListener('pointermove', handleMove);
-    };
-  }, [enabled]);
+      console.log('cleanup')
+      window.removeEventListener('pointermove', handleMove)
+    }
+  }, [enabled])
 
   // change body className
   useEffect(() => {
-    document.body.classList.toggle('no-cursor', enabled);
+    document.body.classList.toggle('no-cursor', enabled)
 
     return () => {
-      document.body.classList.remove('no-cursor');
-    };
-  }, [enabled]);
+      document.body.classList.remove('no-cursor')
+    }
+  }, [enabled])
 
   return (
     <>
@@ -50,12 +50,12 @@ export const FollowMouse = () => {
           top: -25,
           width: 50,
           height: 50,
-          transform: `translate(${position.x}px, ${position.y}px)`,
+          transform: `translate(${position.x}px, ${position.y}px)`
         }}
       />
       <button onClick={() => setEnabled(!enabled)}>
         {enabled ? 'Disable' : 'Enable'} mouse follow
       </button>
     </>
-  );
-};
+  )
+}
