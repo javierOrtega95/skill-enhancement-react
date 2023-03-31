@@ -19,5 +19,5 @@ export function useSearch() {
     setError(null);
   }, [search]);
 
-  return { search, updateSearch, error };
+  return { search, updateSearch, searchError: error };
 }

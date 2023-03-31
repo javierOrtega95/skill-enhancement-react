@@ -8,8 +8,11 @@ import { useSearch } from './hooks/useSearch';
 function App() {
   const [sort, setSort] = useState(false);
 
-  const { search, updateSearch, error } = useSearch();
-  const { movies, getMovies } = useMovies({ search, sort });
+  const { search, updateSearch, searchError } = useSearch();
+  const { movies, getMovies, loading, error } = useMovies({
+    search,
+    sort,
+  });
   // const inputRef = useRef();
 
   const debouncedGetMovies = useCallback(
@@ -64,12 +67,10 @@ function App() {
           </div>
           <button type='submit'>Search</button>
         </form>
-        {error && <p style={{ color: 'red' }}>{error}</p>}
+        {searchError && <p style={{ color: 'red' }}>{error}</p>}
       </header>
 
-      <main>
-        <Movies movies={movies} />
-      </main>
+      <main>{loading ? <p>loading...</p> : <Movies movies={movies} />}</main>
     </div>
   );
 }
