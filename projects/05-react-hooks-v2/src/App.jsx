@@ -1,6 +1,13 @@
+import { products } from './mocks/products.json'
+import { Products } from './components/Products'
+import { Header } from './components/Header'
+
 function App () {
   return (
-    <h1>Shopping Cart 🛒</h1>
+    <>
+      <Header />
+      <Products products={products} />
+    </>
   )
 }
 
