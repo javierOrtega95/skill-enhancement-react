@@ -1,4 +1,4 @@
-```sh
+
 # TASK
 
 Ecommerce
@@ -14,4 +14,4 @@ Cart:
 - Allow to modify the quantity of products.
 - Synchronize the changes in the cart with the list of products.
 - Save the cart in localStorage.
-```
+
