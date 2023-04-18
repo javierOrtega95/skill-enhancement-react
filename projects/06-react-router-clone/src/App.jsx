@@ -1,6 +1,23 @@
+import { Router } from './components/Router'
+import AboutPage from './pages/About'
+import HomePage from './pages/Home'
+
+const appRoutes = [
+  {
+    path: '/',
+    Component: HomePage
+  },
+  {
+    path: '/about',
+    Component: AboutPage
+  }
+]
+
 function App () {
   return (
-    <h1>React Router Clone</h1>
+    <main>
+      <Router routes={appRoutes} />
+    </main>
   )
 }
 
