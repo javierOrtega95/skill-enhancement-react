@@ -1,9 +1,7 @@
-
 # TASK
 
 Create a React Router clone
 
-- Create a way to make MPA (Multiple Page Applications)
 - Create a way to make SPA (Single Page Applications)
 - Enable navigating between pages with the back button
 - Create a Link component to make it declarative
