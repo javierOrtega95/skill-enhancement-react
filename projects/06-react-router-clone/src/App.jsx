@@ -14,7 +14,7 @@ const appRoutes = [
     Component: LazyHomePage
   },
   {
-    path: '/about',
+    path: '/:lang/about',
     Component: LazyAboutPage
   },
   {
@@ -29,6 +29,7 @@ function App () {
       <Suspense fallback={null}>
         <Router routes={appRoutes} defaultComponent={Page404}>
           <Route path='/search' Component={SearchPage} />
+          <Route path='/about' Component={LazyAboutPage} />
         </Router>
       </Suspense>
     </main>
