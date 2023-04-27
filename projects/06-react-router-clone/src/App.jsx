@@ -1,18 +1,21 @@
 import { Route } from './components/Route'
 import { Router } from './components/Router'
 import Page404 from './pages/404'
-import AboutPage from './pages/About'
-import HomePage from './pages/Home'
 import SearchPage from './pages/Search'
+
+import { lazy, Suspense } from 'react'
+
+const LazyHomePage = lazy(() => import('./pages/Home.jsx'))
+const LazyAboutPage = lazy(() => import('./pages/About.jsx'))
 
 const appRoutes = [
   {
     path: '/',
-    Component: HomePage
+    Component: LazyHomePage
   },
   {
     path: '/about',
-    Component: AboutPage
+    Component: LazyAboutPage
   },
   {
     path: '/search/:query',
@@ -23,9 +26,11 @@ const appRoutes = [
 function App () {
   return (
     <main>
-      <Router routes={appRoutes} defaultComponent={Page404}>
-        <Route path='/search' Component={SearchPage} />
-      </Router>
+      <Suspense fallback={null}>
+        <Router routes={appRoutes} defaultComponent={Page404}>
+          <Route path='/search' Component={SearchPage} />
+        </Router>
+      </Suspense>
     </main>
   )
 }
