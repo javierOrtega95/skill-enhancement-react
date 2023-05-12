@@ -22,6 +22,7 @@ const initialState = {
 type Action =
   | { type: 'FILTER_CHANGE', payload: { filter: FilterValue } }
   | { type: 'COMPLETED', payload: { id: string, completed: boolean } }
+  | { type: 'REMOVE', payload: { id: string } }
 
 interface State {
   todos: TodoList
@@ -54,6 +55,14 @@ const reducer = (state: State, action: Action): State => {
     }
   }
 
+  if (action.type === 'REMOVE') {
+    const { id } = action.payload
+    return {
+      ...state,
+      todos: state.todos.filter((todo) => todo.id !== id)
+    }
+  }
+
   return state
 }
 
@@ -62,6 +71,7 @@ export const useTodos = (): {
   filterSelected: FilterValue
   handleFilterChange: (filter: FilterValue) => void
   handleCompleted: (id: string, completed: boolean) => void
+  handleRemove: (id: string) => void
 } => {
   const [{ todos, filterSelected }, dispatch] = useReducer(reducer, initialState)
 
@@ -74,6 +84,10 @@ export const useTodos = (): {
 
   const handleCompleted = (id: string, completed: boolean): void => {
     dispatch({ type: 'COMPLETED', payload: { id, completed } })
+  }
+
+  const handleRemove = (id: string): void => {
+    dispatch({ type: 'REMOVE', payload: { id } })
   }
 
   const filteredTodos = todos.filter(todo => {
@@ -92,6 +106,7 @@ export const useTodos = (): {
     todos: filteredTodos,
     filterSelected,
     handleFilterChange,
-    handleCompleted
+    handleCompleted,
+    handleRemove
   }
 }
