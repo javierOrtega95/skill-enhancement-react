@@ -101,6 +101,7 @@ export const useTodos = (): {
   handleUpdateTitle: (params: { id: string, title: string }) => void
   handleClearCompleted: () => void
   completedCount: number
+  activeCount: number
 } => {
   const [{ todos, filterSelected }, dispatch] = useReducer(reducer, initialState)
 
@@ -128,6 +129,7 @@ export const useTodos = (): {
   }
 
   const completedCount = todos.filter((todo) => todo.completed).length
+  const activeCount = todos.length - completedCount
 
   const filteredTodos = todos.filter(todo => {
     if (filterSelected === TODO_FILTERS.ACTIVE) {
@@ -149,6 +151,7 @@ export const useTodos = (): {
     handleRemove,
     handleUpdateTitle,
     handleClearCompleted,
-    completedCount
+    completedCount,
+    activeCount
   }
 }
