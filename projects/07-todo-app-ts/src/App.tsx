@@ -4,7 +4,7 @@ import { Todos } from './components/Todos'
 import { useTodos } from './hooks/useTodos'
 
 const App: React.FC = () => {
-  const { todos, handleFilterChange, filterSelected, handleCompleted, handleRemove, handleUpdateTitle } = useTodos()
+  const { todos, handleFilterChange, filterSelected, handleCompleted, handleRemove, handleUpdateTitle, completedCount, handleClearCompleted } = useTodos()
   return (
     <main className='todoapp'>
       <Header />
@@ -12,6 +12,8 @@ const App: React.FC = () => {
       <Footer
         filterSelected={filterSelected}
         handleFilterChange={handleFilterChange}
+        completedCount={completedCount}
+        onClearCompleted={handleClearCompleted}
       />
     </main>
   )

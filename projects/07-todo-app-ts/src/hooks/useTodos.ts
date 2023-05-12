@@ -24,6 +24,7 @@ type Action =
   | { type: 'COMPLETED', payload: { id: string, completed: boolean } }
   | { type: 'REMOVE', payload: { id: string } }
   | { type: 'UPDATE_TITLE', payload: { id: string, title: string } }
+  | { type: 'CLEAR_COMPLETED' }
 
 interface State {
   todos: TodoList
@@ -81,6 +82,13 @@ const reducer = (state: State, action: Action): State => {
     }
   }
 
+  if (action.type === 'CLEAR_COMPLETED') {
+    return {
+      ...state,
+      todos: state.todos.filter((todo) => !todo.completed)
+    }
+  }
+
   return state
 }
 
@@ -91,6 +99,8 @@ export const useTodos = (): {
   handleCompleted: (id: string, completed: boolean) => void
   handleRemove: (id: string) => void
   handleUpdateTitle: (params: { id: string, title: string }) => void
+  handleClearCompleted: () => void
+  completedCount: number
 } => {
   const [{ todos, filterSelected }, dispatch] = useReducer(reducer, initialState)
 
@@ -113,6 +123,12 @@ export const useTodos = (): {
     dispatch({ type: 'UPDATE_TITLE', payload: { id, title } })
   }
 
+  const handleClearCompleted = (): void => {
+    dispatch({ type: 'CLEAR_COMPLETED' })
+  }
+
+  const completedCount = todos.filter((todo) => todo.completed).length
+
   const filteredTodos = todos.filter(todo => {
     if (filterSelected === TODO_FILTERS.ACTIVE) {
       return !todo.completed
@@ -131,6 +147,8 @@ export const useTodos = (): {
     handleFilterChange,
     handleCompleted,
     handleRemove,
-    handleUpdateTitle
+    handleUpdateTitle,
+    handleClearCompleted,
+    completedCount
   }
 }
