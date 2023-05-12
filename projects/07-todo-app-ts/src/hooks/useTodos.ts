@@ -23,6 +23,7 @@ type Action =
   | { type: 'FILTER_CHANGE', payload: { filter: FilterValue } }
   | { type: 'COMPLETED', payload: { id: string, completed: boolean } }
   | { type: 'REMOVE', payload: { id: string } }
+  | { type: 'UPDATE_TITLE', payload: { id: string, title: string } }
 
 interface State {
   todos: TodoList
@@ -63,6 +64,23 @@ const reducer = (state: State, action: Action): State => {
     }
   }
 
+  if (action.type === 'UPDATE_TITLE') {
+    const { id, title } = action.payload
+    return {
+      ...state,
+      todos: state.todos.map((todo) => {
+        if (todo.id === id) {
+          return {
+            ...todo,
+            title
+          }
+        }
+
+        return todo
+      })
+    }
+  }
+
   return state
 }
 
@@ -72,6 +90,7 @@ export const useTodos = (): {
   handleFilterChange: (filter: FilterValue) => void
   handleCompleted: (id: string, completed: boolean) => void
   handleRemove: (id: string) => void
+  handleUpdateTitle: (params: { id: string, title: string }) => void
 } => {
   const [{ todos, filterSelected }, dispatch] = useReducer(reducer, initialState)
 
@@ -88,6 +107,10 @@ export const useTodos = (): {
 
   const handleRemove = (id: string): void => {
     dispatch({ type: 'REMOVE', payload: { id } })
+  }
+
+  const handleUpdateTitle = ({ id, title }: { id: string, title: string }): void => {
+    dispatch({ type: 'UPDATE_TITLE', payload: { id, title } })
   }
 
   const filteredTodos = todos.filter(todo => {
@@ -107,6 +130,7 @@ export const useTodos = (): {
     filterSelected,
     handleFilterChange,
     handleCompleted,
-    handleRemove
+    handleRemove,
+    handleUpdateTitle
   }
 }
