@@ -25,6 +25,7 @@ type Action =
   | { type: 'REMOVE', payload: { id: string } }
   | { type: 'UPDATE_TITLE', payload: { id: string, title: string } }
   | { type: 'CLEAR_COMPLETED' }
+  | { type: 'SAVE', payload: { title: string } }
 
 interface State {
   todos: TodoList
@@ -54,6 +55,20 @@ const reducer = (state: State, action: Action): State => {
 
         return todo
       })
+    }
+  }
+
+  if (action.type === 'SAVE') {
+    const { title } = action.payload
+    const newTodo = {
+      id: crypto.randomUUID(),
+      title,
+      completed: false
+    }
+
+    return {
+      ...state,
+      todos: [...state.todos, newTodo]
     }
   }
 
@@ -100,6 +115,7 @@ export const useTodos = (): {
   handleRemove: (id: string) => void
   handleUpdateTitle: (params: { id: string, title: string }) => void
   handleClearCompleted: () => void
+  handleSave: (title: string) => void
   completedCount: number
   activeCount: number
 } => {
@@ -114,6 +130,10 @@ export const useTodos = (): {
 
   const handleCompleted = (id: string, completed: boolean): void => {
     dispatch({ type: 'COMPLETED', payload: { id, completed } })
+  }
+
+  const handleSave = (title: string): void => {
+    dispatch({ type: 'SAVE', payload: { title } })
   }
 
   const handleRemove = (id: string): void => {
@@ -151,6 +171,7 @@ export const useTodos = (): {
     handleRemove,
     handleUpdateTitle,
     handleClearCompleted,
+    handleSave,
     completedCount,
     activeCount
   }

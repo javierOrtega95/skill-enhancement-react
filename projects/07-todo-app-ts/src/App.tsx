@@ -13,11 +13,12 @@ const App: React.FC = () => {
     handleUpdateTitle,
     completedCount,
     handleClearCompleted,
-    activeCount
+    activeCount,
+    handleSave
   } = useTodos()
   return (
     <main className='todoapp'>
-      <Header />
+      <Header saveTodo={handleSave} />
       <Todos todos={todos} setCompleted={handleCompleted} removeTodo={handleRemove} setTitle={handleUpdateTitle} />
       <Footer
         filterSelected={filterSelected}
