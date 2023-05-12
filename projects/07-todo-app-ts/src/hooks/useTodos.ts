@@ -21,6 +21,7 @@ const initialState = {
 
 type Action =
   | { type: 'FILTER_CHANGE', payload: { filter: FilterValue } }
+  | { type: 'COMPLETED', payload: { id: string, completed: boolean } }
 
 interface State {
   todos: TodoList
@@ -36,6 +37,23 @@ const reducer = (state: State, action: Action): State => {
     }
   }
 
+  if (action.type === 'COMPLETED') {
+    const { id, completed } = action.payload
+    return {
+      ...state,
+      todos: state.todos.map((todo) => {
+        if (todo.id === id) {
+          return {
+            ...todo,
+            completed
+          }
+        }
+
+        return todo
+      })
+    }
+  }
+
   return state
 }
 
@@ -43,6 +61,7 @@ export const useTodos = (): {
   todos: TodoList
   filterSelected: FilterValue
   handleFilterChange: (filter: FilterValue) => void
+  handleCompleted: (id: string, completed: boolean) => void
 } => {
   const [{ todos, filterSelected }, dispatch] = useReducer(reducer, initialState)
 
@@ -51,6 +70,10 @@ export const useTodos = (): {
     const params = new URLSearchParams(window.location.search)
     params.set('filter', filter)
     window.history.pushState({}, '', `${window.location.pathname}?${params.toString()}`)
+  }
+
+  const handleCompleted = (id: string, completed: boolean): void => {
+    dispatch({ type: 'COMPLETED', payload: { id, completed } })
   }
 
   const filteredTodos = todos.filter(todo => {
@@ -68,6 +91,7 @@ export const useTodos = (): {
   return {
     todos: filteredTodos,
     filterSelected,
-    handleFilterChange
+    handleFilterChange,
+    handleCompleted
   }
 }

@@ -3,10 +3,12 @@ import { Todo } from './Todo'
 
 interface Props {
   todos: TodoType[]
+  setCompleted: (id: string, completed: boolean) => void
 }
 
 export const Todos: React.FC<Props> = ({
-  todos
+  todos,
+  setCompleted
 }) => {
   return (
     <ul className='todo-list'>
@@ -22,6 +24,7 @@ export const Todos: React.FC<Props> = ({
             id={todo.id}
             title={todo.title}
             completed={todo.completed}
+            setCompleted={setCompleted}
           />
         </li>
       ))}

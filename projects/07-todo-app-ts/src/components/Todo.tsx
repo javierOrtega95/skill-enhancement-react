@@ -2,12 +2,14 @@ interface Props {
   id: string
   title: string
   completed: boolean
+  setCompleted: (id: string, completed: boolean) => void
 }
 
 export const Todo: React.FC<Props> = ({
   id,
   title,
-  completed
+  completed,
+  setCompleted
 }) => {
   return (
     <>
@@ -16,7 +18,7 @@ export const Todo: React.FC<Props> = ({
           className='toggle'
           checked={completed}
           type='checkbox'
-          onChange={(e) => { console.log('set completed') }}
+          onChange={(e) => { setCompleted(id, e.target.checked) }}
         />
         <label>{title}</label>
         <button className='destroy' />
