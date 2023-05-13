@@ -20,7 +20,7 @@ export const CreateTodo: React.FC<Props> = ({ saveTodo }) => {
       value={inputValue}
       onChange={(e) => { setInputValue(e.target.value) }}
       onKeyDown={handleKeyDown}
-      placeholder='What you want to do?'
+      placeholder='What do you want to do?'
       autoFocus
     />
   )
