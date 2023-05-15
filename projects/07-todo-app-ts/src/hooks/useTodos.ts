@@ -1,10 +1,11 @@
-import { useReducer } from 'react'
+import { useEffect, useReducer } from 'react'
 import { TODO_FILTERS } from '../consts'
-import { mockTodos } from '../mocks/todos'
 import { type FilterValue, type TodoList } from '../types'
+import { fetchTodos, updateTodos } from '../services/todos'
 
 const initialState = {
-  todos: mockTodos,
+  todos: [],
+  sync: false,
   filterSelected: (() => {
     // read from url query params using URLSearchParams
     const params = new URLSearchParams(window.location.search)
@@ -26,17 +27,29 @@ type Action =
   | { type: 'UPDATE_TITLE', payload: { id: string, title: string } }
   | { type: 'CLEAR_COMPLETED' }
   | { type: 'SAVE', payload: { title: string } }
+  | { type: 'INIT_TODOS', payload: { todos: TodoList } }
 
 interface State {
   todos: TodoList
+  sync: boolean
   filterSelected: FilterValue
 }
 
 const reducer = (state: State, action: Action): State => {
+  if (action.type === 'INIT_TODOS') {
+    const { todos } = action.payload
+    return {
+      ...state,
+      sync: false,
+      todos
+    }
+  }
+
   if (action.type === 'FILTER_CHANGE') {
     const { filter } = action.payload
     return {
       ...state,
+      sync: true,
       filterSelected: filter
     }
   }
@@ -45,6 +58,7 @@ const reducer = (state: State, action: Action): State => {
     const { id, completed } = action.payload
     return {
       ...state,
+      sync: true,
       todos: state.todos.map((todo) => {
         if (todo.id === id) {
           return {
@@ -68,6 +82,7 @@ const reducer = (state: State, action: Action): State => {
 
     return {
       ...state,
+      sync: true,
       todos: [...state.todos, newTodo]
     }
   }
@@ -76,6 +91,7 @@ const reducer = (state: State, action: Action): State => {
     const { id } = action.payload
     return {
       ...state,
+      sync: true,
       todos: state.todos.filter((todo) => todo.id !== id)
     }
   }
@@ -84,6 +100,7 @@ const reducer = (state: State, action: Action): State => {
     const { id, title } = action.payload
     return {
       ...state,
+      sync: true,
       todos: state.todos.map((todo) => {
         if (todo.id === id) {
           return {
@@ -100,6 +117,7 @@ const reducer = (state: State, action: Action): State => {
   if (action.type === 'CLEAR_COMPLETED') {
     return {
       ...state,
+      sync: true,
       todos: state.todos.filter((todo) => !todo.completed)
     }
   }
@@ -119,7 +137,7 @@ export const useTodos = (): {
   completedCount: number
   activeCount: number
 } => {
-  const [{ todos, filterSelected }, dispatch] = useReducer(reducer, initialState)
+  const [{ todos, filterSelected, sync }, dispatch] = useReducer(reducer, initialState)
 
   const handleFilterChange = (filter: FilterValue): void => {
     dispatch({ type: 'FILTER_CHANGE', payload: { filter } })
@@ -162,6 +180,20 @@ export const useTodos = (): {
 
     return true
   })
+
+  useEffect(() => {
+    fetchTodos()
+      .then(todos => {
+        dispatch({ type: 'INIT_TODOS', payload: { todos } })
+      })
+      .catch(err => { console.error(err) })
+  }, [])
+
+  useEffect(() => {
+    if (sync) {
+      updateTodos({ todos }).catch(err => { console.error(err) })
+    }
+  }, [todos, sync])
 
   return {
     todos: filteredTodos,
