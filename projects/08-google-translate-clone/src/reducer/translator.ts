@@ -1,6 +1,14 @@
 import { AUTO_LANGUAGE } from '../constants'
 import { type Action, type State } from '../types'
 
+export const initialState: State = {
+  fromLanguage: 'auto',
+  toLanguage: 'en',
+  fromText: '',
+  result: '',
+  loading: false
+}
+
 export function translatorReducer (state: State, action: Action) {
   const { type } = action
 
