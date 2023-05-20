@@ -8,7 +8,7 @@ interface Props {
   value: string
 }
 
-const commonStyles = { border: 0, height: '200px' }
+const commonStyles = { height: '500px' }
 
 const getPlaceholder = ({ type, loading }: { type: SectionType, loading?: boolean }) => {
   if (type === SectionType.From) return 'Enter text'
