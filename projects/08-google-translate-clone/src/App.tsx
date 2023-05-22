@@ -5,7 +5,7 @@ import { LanguageSelector } from './components/LanguageSelector'
 import { SectionType } from './types.d'
 import { TextArea } from './components/TextArea'
 import { ArrowsIcon } from './components/Icons'
-import { useTranslator } from './hooks/useTranslator'
+import { useTranslate } from './hooks/useTranslate'
 import { AUTO_LANGUAGE } from './constants'
 
 function App () {
@@ -20,7 +20,7 @@ function App () {
     setToLanguage,
     setFromText,
     setResult
-  } = useTranslator()
+  } = useTranslate()
 
   return (
     <main className='App'>

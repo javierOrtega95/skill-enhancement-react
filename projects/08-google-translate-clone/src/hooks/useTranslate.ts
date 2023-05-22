@@ -2,7 +2,7 @@ import { useReducer } from 'react'
 import { initialState, translatorReducer } from '../reducer/translator'
 import { type FromLanguage, type Language } from '../types'
 
-export function useTranslator () {
+export function useTranslate () {
   const [{
     fromLanguage,
     toLanguage,
