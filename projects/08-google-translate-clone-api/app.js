@@ -31,7 +31,7 @@ app.post('/api/translate/', async (req, res) => {
   })
 
   if (!response.ok) {
-    return res.status(200).send('Error translating')
+    return res.status(500).send('Error translating')
   }
 
   const result = await response.json()
