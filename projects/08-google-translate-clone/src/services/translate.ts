@@ -1,11 +1,22 @@
-import { Language } from "../types"
+import { FromLanguage, Language } from "../types"
 
-export async function translate ({ targetLanguage, text }: { targetLanguage: Language, text: string }) {
+export async function translate ({ sourceLanguage, targetLanguage, text }:
+	{ sourceLanguage: FromLanguage, 
+		targetLanguage: Language, 
+		text: string 
+	}) {
 
-	try {
 
-		const response = await fetch(`${import.meta.env.VITE_API_URL}/translate?text=${text}&target_lang=${targetLanguage}`, {
-			method: 'POST'
+		const response = await fetch(`${import.meta.env.VITE_API_URL}/translate`, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+			},
+			body: new URLSearchParams({
+				'sourceLanguage': sourceLanguage,
+				'targetLanguage': targetLanguage,
+				'text': text
+			})
 		})
 		
 		const result = await response.json()
@@ -13,9 +24,4 @@ export async function translate ({ targetLanguage, text }: { targetLanguage: Lan
 		const { translations } = result
 
 		return translations[0].text
-		
-	} catch (error) {
-		console.error(error)
-	}
-	
 }

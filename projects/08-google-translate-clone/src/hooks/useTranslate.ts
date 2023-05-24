@@ -1,6 +1,8 @@
-import { useReducer } from 'react'
+import { useEffect, useReducer } from 'react'
 import { initialState, translatorReducer } from '../reducer/translator'
 import { type FromLanguage, type Language } from '../types'
+import { useDebounce } from './useDebounce'
+import { translate } from '../services/translate'
 
 export function useTranslate () {
   const [{
@@ -30,6 +32,19 @@ export function useTranslate () {
   const setResult = (payload: string) => {
     dispatch({ type: 'SET_RESULT', payload })
   }
+
+  const debouncedFromText = useDebounce(fromText, 300)
+
+  useEffect(() => {
+    if (debouncedFromText === '') return
+
+    translate({ sourceLanguage: fromLanguage, targetLanguage: toLanguage, text: debouncedFromText })
+    .then(result => {
+      if (result == null) return
+      setResult(result)
+    }).catch(() => setResult('Error'))
+
+  }, [debouncedFromText, fromLanguage, toLanguage])
 
   return {
     fromLanguage,
