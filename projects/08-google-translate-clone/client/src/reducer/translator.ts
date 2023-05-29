@@ -2,8 +2,8 @@ import { AUTO_LANGUAGE } from '../constants'
 import { type Action, type State } from '../types'
 
 export const initialState: State = {
-  fromLanguage: 'auto',
-  toLanguage: 'en',
+  sourceLanguage: 'auto',
+  targetLanguage: 'EN',
   fromText: '',
   result: '',
   loading: false
@@ -13,7 +13,7 @@ export function translatorReducer (state: State, action: Action) {
   const { type } = action
 
   if (type === 'INTERCHANGE_LANGUAGES') {
-    if (state.fromLanguage === AUTO_LANGUAGE) return state
+    if (state.sourceLanguage === AUTO_LANGUAGE || state.sourceLanguage === state.targetLanguage) return state
 
     const loading = state.fromText !== ''
 
@@ -21,32 +21,32 @@ export function translatorReducer (state: State, action: Action) {
       ...state,
       loading,
       result: '',
-      fromLanguage: state.toLanguage,
-      toLanguage: state.fromLanguage
+      sourceLanguage: state.targetLanguage,
+      targetLanguage: state.sourceLanguage
     }
   }
 
   if (type === 'SET_FROM_LANGUAGE') {
-    if (state.fromLanguage === action.payload) return state
+    if (state.sourceLanguage === action.payload) return state
 
     const loading = state.fromText !== ''
 
     return {
       ...state,
-      fromLanguage: action.payload,
+      sourceLanguage: action.payload,
       result: '',
       loading
     }
   }
 
   if (type === 'SET_TO_LANGUAGE') {
-    if (state.toLanguage === action.payload) return state
+    if (state.targetLanguage === action.payload) return state
 
     const loading = state.fromText !== ''
 
     return {
       ...state,
-      toLanguage: action.payload,
+      targetLanguage: action.payload,
       result: '',
       loading
     }

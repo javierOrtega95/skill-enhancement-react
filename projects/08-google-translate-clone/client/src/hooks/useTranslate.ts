@@ -1,13 +1,13 @@
 import { useEffect, useReducer } from 'react'
 import { initialState, translatorReducer } from '../reducer/translator'
-import { type FromLanguage, type Language } from '../types'
+import { type SourceLanguage, type Language } from '../types'
 import { useDebounce } from './useDebounce'
 import { translate } from '../services/translate'
 
 export function useTranslate () {
   const [{
-    fromLanguage,
-    toLanguage,
+    sourceLanguage,
+    targetLanguage,
     fromText,
     result,
     loading
@@ -17,11 +17,11 @@ export function useTranslate () {
     dispatch({ type: 'INTERCHANGE_LANGUAGES' })
   }
 
-  const setFromLanguage = (payload: FromLanguage) => {
+  const setSourceLanguage = (payload: SourceLanguage) => {
     dispatch({ type: 'SET_FROM_LANGUAGE', payload })
   }
 
-  const setToLanguage = (payload: Language) => {
+  const setTargetLanguage = (payload: Language) => {
     dispatch({ type: 'SET_TO_LANGUAGE', payload })
   }
 
@@ -38,23 +38,21 @@ export function useTranslate () {
   useEffect(() => {
     if (debouncedFromText === '') return
 
-    translate({ sourceLanguage: fromLanguage, targetLanguage: toLanguage, text: debouncedFromText })
-    .then(result => {
-      if (result == null) return
-      setResult(result)
-    }).catch(() => setResult('Error'))
-
-  }, [debouncedFromText, fromLanguage, toLanguage])
+    translate({ sourceLanguage, targetLanguage, text: debouncedFromText })
+      .then(result => {
+        setResult(result)
+      }).catch(() => { setResult('Error') })
+  }, [debouncedFromText, sourceLanguage, targetLanguage])
 
   return {
-    fromLanguage,
-    toLanguage,
+    sourceLanguage,
+    targetLanguage,
     fromText,
     result,
     loading,
     interchangeLanguages,
-    setFromLanguage,
-    setToLanguage,
+    setSourceLanguage,
+    setTargetLanguage,
     setFromText,
     setResult
   }

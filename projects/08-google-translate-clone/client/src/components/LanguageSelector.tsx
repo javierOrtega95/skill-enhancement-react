@@ -1,9 +1,9 @@
 import { Form } from 'react-bootstrap'
 import { AUTO_LANGUAGE, SUPPORTED_LANGUAGES } from '../constants'
-import { SectionType, type FromLanguage, type Language } from '../types.d'
+import { SectionType, type SourceLanguage, type Language } from '../types.d'
 
 type Props =
-  | { type: SectionType.From, value: FromLanguage, onChange: (language: FromLanguage) => void }
+  | { type: SectionType.From, value: SourceLanguage, onChange: (language: SourceLanguage) => void }
   | { type: SectionType.To, value: Language, onChange: (language: Language) => void }
 
 export const LanguageSelector = ({ onChange, type, value }: Props) => {

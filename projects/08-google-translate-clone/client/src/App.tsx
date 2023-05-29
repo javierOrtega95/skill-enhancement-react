@@ -11,13 +11,13 @@ import { AUTO_LANGUAGE } from './constants'
 function App () {
   const {
     loading,
-    fromLanguage,
-    toLanguage,
+    sourceLanguage,
+    targetLanguage,
     fromText,
     result,
     interchangeLanguages,
-    setFromLanguage,
-    setToLanguage,
+    setSourceLanguage,
+    setTargetLanguage,
     setFromText,
     setResult
   } = useTranslate()
@@ -31,8 +31,8 @@ function App () {
             <Stack gap={2}>
               <LanguageSelector
                 type={SectionType.From}
-                value={fromLanguage}
-                onChange={setFromLanguage}
+                value={sourceLanguage}
+                onChange={setSourceLanguage}
               />
 
               <TextArea
@@ -45,7 +45,7 @@ function App () {
           </Col>
 
           <Col xs='auto'>
-            <Button variant='link' disabled={fromLanguage === AUTO_LANGUAGE} onClick={interchangeLanguages}>
+            <Button variant='link' disabled={sourceLanguage === AUTO_LANGUAGE} onClick={interchangeLanguages}>
               <ArrowsIcon />
             </Button>
           </Col>
@@ -54,8 +54,8 @@ function App () {
             <Stack gap={2}>
               <LanguageSelector
                 type={SectionType.To}
-                value={toLanguage}
-                onChange={setToLanguage}
+                value={targetLanguage}
+                onChange={setTargetLanguage}
               />
               <TextArea
                 loading={loading}
