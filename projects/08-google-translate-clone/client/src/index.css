@@ -17,6 +17,7 @@
 body {
   margin: 0;
   display: flex;
+  font-family: Roboto, RobotoDraft, Helvetica, Arial, sans-serif;
 }
 
 h2 {
@@ -25,4 +26,15 @@ h2 {
 
 textarea {
   resize: none;
+}
+
+.translation-wrapper {
+  position: relative;
+}
+
+.translation-wrapper .actions {
+  position: absolute;
+  left: 8px;
+  bottom: 8px;
+  display: flex;
 }

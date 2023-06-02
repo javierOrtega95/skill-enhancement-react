@@ -4,9 +4,10 @@ import { Container, Row, Col, Button, Stack } from 'react-bootstrap'
 import { LanguageSelector } from './components/LanguageSelector'
 import { SectionType } from './types.d'
 import { TextArea } from './components/TextArea'
-import { ArrowsIcon } from './components/Icons'
+import { ArrowsIcon, ClipBoardIcon } from './components/Icons'
 import { useTranslate } from './hooks/useTranslate'
 import { AUTO_LANGUAGE } from './constants'
+import { Tooltip } from './components/tooltip/Tooltip'
 
 function App () {
   const {
@@ -22,10 +23,16 @@ function App () {
     setResult
   } = useTranslate()
 
+  const handleClipboard = () => {
+    navigator.clipboard.writeText(result).catch((error) => {
+      console.error(error)
+    })
+  }
+
   return (
     <main className='App'>
-      <h2>Google Translate Clone</h2>
       <Container fluid>
+        <h2>Google Translate Clone</h2>
         <Row>
           <Col>
             <Stack gap={2}>
@@ -57,12 +64,26 @@ function App () {
                 value={targetLanguage}
                 onChange={setTargetLanguage}
               />
-              <TextArea
-                loading={loading}
-                type={SectionType.To}
-                value={result}
-                onChange={setResult}
-              />
+              <div className='translation-wrapper'>
+                <TextArea
+                  loading={loading}
+                  type={SectionType.To}
+                  value={result}
+                  onChange={setResult}
+                />
+
+                <div className='actions'>
+                  <Tooltip text='Copy to clipboard'>
+                    <Button
+                      variant='link'
+                      onClick={handleClipboard}
+                    >
+                      <ClipBoardIcon />
+                    </Button>
+                  </Tooltip>
+                </div>
+
+              </div>
             </Stack>
           </Col>
         </Row>
