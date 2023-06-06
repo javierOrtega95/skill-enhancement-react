@@ -38,3 +38,7 @@ textarea {
   bottom: 8px;
   display: flex;
 }
+
+.translation-wrapper .actions svg {
+  fill: rgb(95, 99, 104);
+}

@@ -8,6 +8,8 @@ import { ArrowsIcon, ClipBoardIcon } from './components/Icons'
 import { useTranslate } from './hooks/useTranslate'
 import { AUTO_LANGUAGE } from './constants'
 import { Tooltip } from './components/tooltip/Tooltip'
+import { useContext } from 'react'
+import { ToastContext } from './components/toast/context/ToastProvider'
 
 function App () {
   const {
@@ -23,10 +25,16 @@ function App () {
     setResult
   } = useTranslate()
 
+  const { open } = useContext(ToastContext)
+
   const handleClipboard = () => {
-    navigator.clipboard.writeText(result).catch((error) => {
-      console.error(error)
-    })
+    navigator.clipboard.writeText(result)
+      .then(() => {
+        open('Translation copied')
+      })
+      .catch((error) => {
+        console.error(error)
+      })
   }
 
   return (
@@ -72,16 +80,17 @@ function App () {
                   onChange={setResult}
                 />
 
-                <div className='actions'>
-                  <Tooltip text='Copy to clipboard'>
-                    <Button
-                      variant='link'
-                      onClick={handleClipboard}
-                    >
-                      <ClipBoardIcon />
-                    </Button>
-                  </Tooltip>
-                </div>
+                {Boolean(result) &&
+                  <div className='actions'>
+                    <Tooltip text='Copy to clipboard'>
+                      <Button
+                        variant='link'
+                        onClick={handleClipboard}
+                      >
+                        <ClipBoardIcon />
+                      </Button>
+                    </Tooltip>
+                  </div>}
 
               </div>
             </Stack>
