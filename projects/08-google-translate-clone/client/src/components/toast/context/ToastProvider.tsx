@@ -4,9 +4,13 @@ import { Toast } from '../Toast'
 import { type IToast, type ToastContextType } from './types'
 import { v4 } from 'uuid'
 
-const defaultState = { toasts: [], open: () => {}, close: () => {} }
+const defaultState: ToastContextType = {
+  toasts: [],
+  open: () => {},
+  close: () => {}
+}
 
-export const ToastContext = createContext<ToastContextType>(defaultState)
+export const ToastContext = createContext(defaultState)
 
 interface Props {
   children?: React.ReactNode
@@ -16,7 +20,7 @@ export const ToastProvider: React.FC<Props> = ({ children }) => {
   const [toasts, setToasts] = useState<IToast[]>([])
 
   const open = (content: string) => {
-    setToasts(state => {
+    setToasts((state) => {
       return [...state, { id: v4(), content }]
     })
   }
@@ -28,17 +32,23 @@ export const ToastProvider: React.FC<Props> = ({ children }) => {
   }
 
   return (
-    <ToastContext.Provider value={{
-      toasts,
-      open,
-      close
-    }}
+    <ToastContext.Provider
+      value={{
+        toasts,
+        open,
+        close
+      }}
     >
       {children}
       {createPortal(
         <div className='toasts-wrapper'>
           {toasts.map((toast: IToast) => (
-            <Toast key={toast.id} close={() => { close(toast.id) }}>
+            <Toast
+              key={toast.id}
+              close={() => {
+                close(toast.id)
+              }}
+            >
               {toast.content}
             </Toast>
           ))}
