@@ -50,11 +50,14 @@ function App () {
                 onChange={setSourceLanguage}
               />
 
-              <TextArea
-                type={SectionType.From}
-                value={fromText}
-                onChange={setFromText}
-              />
+              <div className='textarea-wrapper'>
+                <TextArea
+                  type={SectionType.From}
+                  value={fromText}
+                  onChange={setFromText}
+                />
+
+              </div>
             </Stack>
 
           </Col>
@@ -72,7 +75,7 @@ function App () {
                 value={targetLanguage}
                 onChange={setTargetLanguage}
               />
-              <div className='translation-wrapper'>
+              <div className='textarea-wrapper disabled'>
                 <TextArea
                   loading={loading}
                   type={SectionType.To}

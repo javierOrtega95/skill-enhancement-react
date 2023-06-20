@@ -24,21 +24,41 @@ h2 {
   margin-bottom: 1.5rem;
 }
 
-textarea {
+.textarea-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  min-height: 250px;
+  border: 1px solid rgba(0, 0, 0, .12);
+  border-radius: 8px;
+}
+
+.textarea-wrapper .form-control {
+  overflow: auto hidden;
+  min-height: 200px;
+  border: 0;
   resize: none;
 }
 
-.translation-wrapper {
-  position: relative;
+.textarea-wrapper .form-control:focus {
+  box-shadow: none;
 }
 
-.translation-wrapper .actions {
+.textarea-wrapper .form-control:disabled {
+  background-color: transparent;
+}
+
+.textarea-wrapper .actions {
   position: absolute;
-  left: 8px;
-  bottom: 8px;
-  display: flex;
+  bottom: 4px;
 }
 
-.translation-wrapper .actions svg {
+.textarea-wrapper.disabled {
+  background-color: #f5f5f5;
+  border: 0;
+}
+
+.textarea-wrapper .actions svg {
   fill: rgb(95, 99, 104);
 }
