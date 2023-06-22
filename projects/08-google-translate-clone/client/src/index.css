@@ -41,17 +41,16 @@ h2 {
   resize: none;
 }
 
+.textarea-wrapper .actions {
+  position: relative;
+}
+
 .textarea-wrapper .form-control:focus {
   box-shadow: none;
 }
 
 .textarea-wrapper .form-control:disabled {
   background-color: transparent;
-}
-
-.textarea-wrapper .actions {
-  position: absolute;
-  bottom: 4px;
 }
 
 .textarea-wrapper.disabled {

@@ -1,5 +1,6 @@
 .tooltip {
   display: contents;
+  position: relative;
 }
 
 .tooltip .tooltiptext {
@@ -7,7 +8,7 @@
   position: absolute;
   width: 130px;
   text-align: center;
-  padding: 8px;
+  padding: 4px;
   border-radius: 6px;
   z-index: 1;
   opacity: 0;
@@ -22,10 +23,8 @@
   opacity: 1;
 }
 
-.tooltip-top {
-  bottom: 105%;
-  left: 40%;
-  margin-left: -60px;
+.tooltip-bottom {
+  bottom: -40px;
 }
 
 .tooltip-top::after {
