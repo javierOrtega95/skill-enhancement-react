@@ -1,15 +1,11 @@
 import 'bootstrap/dist/css/bootstrap.min.css'
+import { Button, Col, Container, Row } from 'react-bootstrap'
 import './App.css'
-import { Container, Row, Col, Button, Stack } from 'react-bootstrap'
-import { LanguageSelector } from './components/LanguageSelector'
-import { SectionType } from './types.d'
-import { TextArea } from './components/TextArea'
-import { ArrowsIcon, ClipBoardIcon } from './components/Icons'
-import { useTranslate } from './hooks/useTranslate'
+import { ArrowsIcon } from './components/Icons'
+import { SourceLangSection } from './components/SourceLangSection'
+import { TargetLangSection } from './components/TargetLangSection'
 import { AUTO_LANGUAGE } from './constants'
-import { Tooltip } from './components/tooltip/Tooltip'
-import { useContext } from 'react'
-import { ToastContext } from './components/toast/context/ToastProvider'
+import { useTranslate } from './hooks/useTranslate'
 
 function App () {
   const {
@@ -25,41 +21,18 @@ function App () {
     setResult
   } = useTranslate()
 
-  const { open } = useContext(ToastContext)
-
-  const handleClipboard = () => {
-    navigator.clipboard.writeText(result)
-      .then(() => {
-        open('Translation copied')
-      })
-      .catch((error) => {
-        console.error(error)
-      })
-  }
-
   return (
     <main className='App'>
       <Container fluid>
         <h2>Google Translate Clone</h2>
         <Row>
           <Col>
-            <Stack gap={2}>
-              <LanguageSelector
-                type={SectionType.From}
-                value={sourceLanguage}
-                onChange={setSourceLanguage}
-              />
-
-              <div className='textarea-wrapper'>
-                <TextArea
-                  type={SectionType.From}
-                  value={fromText}
-                  onChange={setFromText}
-                />
-
-              </div>
-            </Stack>
-
+            <SourceLangSection
+              sourceLanguage={sourceLanguage}
+              setSourceLanguage={setSourceLanguage}
+              fromText={fromText}
+              setFromText={setFromText}
+            />
           </Col>
 
           <Col xs='auto'>
@@ -69,34 +42,13 @@ function App () {
           </Col>
 
           <Col>
-            <Stack gap={2}>
-              <LanguageSelector
-                type={SectionType.To}
-                value={targetLanguage}
-                onChange={setTargetLanguage}
-              />
-              <div className='textarea-wrapper disabled'>
-                <TextArea
-                  loading={loading}
-                  type={SectionType.To}
-                  value={result}
-                  onChange={setResult}
-                />
-
-                {Boolean(result) &&
-                  <div className='actions'>
-                    <Tooltip text='Copy to clipboard'>
-                      <Button
-                        variant='link'
-                        onClick={handleClipboard}
-                      >
-                        <ClipBoardIcon />
-                      </Button>
-                    </Tooltip>
-                  </div>}
-
-              </div>
-            </Stack>
+            <TargetLangSection
+              targetLanguage={targetLanguage}
+              setTargetLanguage={setTargetLanguage}
+              result={result}
+              setResult={setResult}
+              loading={loading}
+            />
           </Col>
         </Row>
       </Container>
