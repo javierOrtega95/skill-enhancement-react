@@ -29,14 +29,13 @@ h2 {
   flex-direction: column;
   justify-content: space-between;
   position: relative;
-  min-height: 164px;
+  min-height: 166px;
   border: 1px solid rgba(0, 0, 0, .12);
   border-radius: 8px;
 }
 
 .textarea-wrapper .form-control {
   overflow: auto hidden;
-  min-height: 200px;
   border: 0;
   resize: none;
 }
