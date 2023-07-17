@@ -1,11 +1,12 @@
-import { Button, Stack } from 'react-bootstrap'
-import { LanguageSelector } from './LanguageSelector'
-import { TextArea } from './TextArea'
-import { Tooltip } from './tooltip/Tooltip'
-import { ClipBoardIcon } from './Icons'
 import { useContext } from 'react'
-import { ToastContext } from './toast/context/ToastProvider'
+import { Button, Stack } from 'react-bootstrap'
 import { SectionType, type Language } from '../types.d'
+import { ClipBoardIcon, VolumeIcon } from './Icons'
+import { LanguageSelector } from './LanguageSelector'
+import { ToastContext } from './toast/context/ToastProvider'
+import { TextArea } from './TextArea'
+import Tooltip from './tooltip/Tooltip'
+import { useSpeech } from '../hooks/useSpeech'
 
 interface Props {
   targetLanguage: Language
@@ -17,6 +18,7 @@ interface Props {
 
 export function TargetLangSection ({ targetLanguage, setTargetLanguage, result, setResult, loading }: Props) {
   const { open } = useContext(ToastContext)
+  const { handleSpeak } = useSpeech({ text: result, lang: targetLanguage })
 
   const handleClipboard = () => {
     navigator.clipboard.writeText(result)
@@ -53,6 +55,16 @@ export function TargetLangSection ({ targetLanguage, setTargetLanguage, result, 
             >
               <ClipBoardIcon />
             </Button>
+          </Tooltip>
+          <Tooltip text='Listen'>
+            <Button
+              variant='link'
+              disabled={result === ''}
+              onClick={handleSpeak}
+            >
+              <VolumeIcon />
+            </Button>
+
           </Tooltip>
         </div>
       </div>

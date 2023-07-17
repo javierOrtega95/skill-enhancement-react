@@ -42,6 +42,8 @@ h2 {
 
 .textarea-wrapper .actions {
   position: relative;
+  display: flex;
+  justify-content: space-between;
 }
 
 .textarea-wrapper .form-control:focus {
