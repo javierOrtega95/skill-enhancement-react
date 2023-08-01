@@ -2,9 +2,10 @@ import { Button, Stack } from 'react-bootstrap'
 import { SectionType, type SourceLanguage } from '../types.d'
 import { LanguageSelector } from './LanguageSelector'
 import { VolumeIcon } from './Icons'
-import { TextArea } from './TextArea'
 import Tooltip from './tooltip/Tooltip'
 import { useSpeech } from '../hooks/useSpeech'
+import TextArea from './TextArea'
+import { useRef } from 'react'
 
 interface Props {
   sourceLanguage: SourceLanguage
@@ -15,6 +16,13 @@ interface Props {
 
 export function SourceLangSection ({ sourceLanguage, setSourceLanguage, fromText, setFromText }: Props) {
   const { handleSpeak } = useSpeech({ text: fromText, lang: sourceLanguage })
+
+  const textAreaRef = useRef<HTMLTextAreaElement>(null)
+
+  const handleWrapperClick = () => {
+    textAreaRef.current?.focus()
+  }
+
   return (
     <Stack gap={2}>
       <LanguageSelector
@@ -23,8 +31,9 @@ export function SourceLangSection ({ sourceLanguage, setSourceLanguage, fromText
         onChange={setSourceLanguage}
       />
 
-      <div className='textarea-wrapper'>
+      <div className='textarea-wrapper' onClick={handleWrapperClick}>
         <TextArea
+          ref={textAreaRef}
           type={SectionType.From}
           value={fromText}
           onChange={setFromText}

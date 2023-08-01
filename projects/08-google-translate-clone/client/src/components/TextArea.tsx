@@ -1,7 +1,7 @@
 import { Form } from 'react-bootstrap'
 import { SectionType } from '../types.d'
-import { useRef } from 'react'
-import { useAutosizeTextArea } from '../hooks/useAutoSizeTextArea'
+import { forwardRef, useRef, type ForwardedRef, type RefObject } from 'react'
+import { useAutosizeTextArea } from '../hooks/useAutosizeTextArea'
 
 interface Props {
   type: SectionType
@@ -16,8 +16,8 @@ const getPlaceholder = ({ type, loading }: { type: SectionType, loading?: boolea
   return 'Translation'
 }
 
-export const TextArea = ({ type, loading, value, onChange }: Props) => {
-  const textareaRef = useRef<HTMLTextAreaElement>(null)
+const TextArea = ({ type, loading, value, onChange }: Props, ref: ForwardedRef<HTMLTextAreaElement>) => {
+  const textareaRef = ref as RefObject<HTMLTextAreaElement> ?? useRef<HTMLTextAreaElement>(null)
 
   useAutosizeTextArea(textareaRef.current, value)
 
@@ -27,7 +27,7 @@ export const TextArea = ({ type, loading, value, onChange }: Props) => {
 
   return (
     <Form.Control
-      ref={textareaRef}
+      ref={ref ?? textareaRef}
       autoFocus={type === SectionType.From}
       as='textarea'
       disabled={type === SectionType.To}
@@ -37,3 +37,5 @@ export const TextArea = ({ type, loading, value, onChange }: Props) => {
     />
   )
 }
+
+export default forwardRef(TextArea)

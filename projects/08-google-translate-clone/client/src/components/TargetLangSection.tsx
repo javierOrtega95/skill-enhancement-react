@@ -4,9 +4,9 @@ import { SectionType, type Language } from '../types.d'
 import { ClipBoardIcon, VolumeIcon } from './Icons'
 import { LanguageSelector } from './LanguageSelector'
 import { ToastContext } from './toast/context/ToastProvider'
-import { TextArea } from './TextArea'
 import Tooltip from './tooltip/Tooltip'
 import { useSpeech } from '../hooks/useSpeech'
+import TextArea from './TextArea'
 
 interface Props {
   targetLanguage: Language
