@@ -17,9 +17,17 @@ export async function translate ({ sourceLanguage, targetLanguage, text }:
     })
   })
 
+  if (!response.ok) {
+    throw new Error(`${response.status}: ${response.statusText}`)
+  }
+
   const result = await response.json()
 
   const { translations } = result
 
-  return translations[0].text
+  const mappedTranslations = translations.map((translation: { text: string, detected_source_language: string }) => {
+    return { text: translation.text, detectedSourceLang: translation.detected_source_language }
+  })
+
+  return mappedTranslations[0]
 }

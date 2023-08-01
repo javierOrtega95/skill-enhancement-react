@@ -40,8 +40,13 @@ export function useTranslate () {
 
     translate({ sourceLanguage, targetLanguage, text: debouncedFromText })
       .then(result => {
-        setResult(result)
-      }).catch(() => { setResult('Error') })
+        const { text, detectedSourceLang = 'auto' } = result
+        setResult(text)
+        setSourceLanguage(detectedSourceLang)
+      }).catch((error) => {
+        // TODO: handle error
+        console.error(error)
+      })
   }, [debouncedFromText, sourceLanguage, targetLanguage])
 
   return {
