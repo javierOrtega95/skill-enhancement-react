@@ -16,12 +16,19 @@ interface Props {
   loading: boolean
 }
 
-export function TargetLangSection ({ targetLanguage, setTargetLanguage, result, setResult, loading }: Props) {
+export function TargetLangSection ({
+  targetLanguage,
+  setTargetLanguage,
+  result,
+  setResult,
+  loading
+}: Props) {
   const { open } = useContext(ToastContext)
   const { handleSpeak } = useSpeech({ text: result, lang: targetLanguage })
 
   const handleClipboard = () => {
-    navigator.clipboard.writeText(result)
+    navigator.clipboard
+      .writeText(result)
       .then(() => {
         open('Translation copied')
       })
@@ -47,15 +54,6 @@ export function TargetLangSection ({ targetLanguage, setTargetLanguage, result, 
         />
 
         <div className='actions'>
-          <Tooltip text='Copy to clipboard'>
-            <Button
-              variant='link'
-              onClick={handleClipboard}
-              disabled={result === ''}
-            >
-              <ClipBoardIcon />
-            </Button>
-          </Tooltip>
           <Tooltip text='Listen'>
             <Button
               variant='link'
@@ -64,7 +62,15 @@ export function TargetLangSection ({ targetLanguage, setTargetLanguage, result, 
             >
               <VolumeIcon />
             </Button>
-
+          </Tooltip>
+          <Tooltip text='Copy to clipboard'>
+            <Button
+              variant='link'
+              onClick={handleClipboard}
+              disabled={result === ''}
+            >
+              <ClipBoardIcon />
+            </Button>
           </Tooltip>
         </div>
       </div>
