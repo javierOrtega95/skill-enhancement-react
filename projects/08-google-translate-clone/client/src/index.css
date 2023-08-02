@@ -30,20 +30,35 @@ h2 {
   justify-content: space-between;
   position: relative;
   min-height: 166px;
-  border: 1px solid rgba(0, 0, 0, .12);
+  border: 1px solid rgba(0, 0, 0, 0.12);
   border-radius: 8px;
+}
+
+.textarea-wrapper .input-wrapper {
+  padding: 12px 52px 0 16px;
+}
+
+.textarea-wrapper .remove-btn {
+  align-items: center;
+  display: inline-flex;
+  position: absolute;
+  right: 4px;
+  top: 4px;
 }
 
 .textarea-wrapper .form-control {
   overflow: auto hidden;
   border: 0;
   resize: none;
+  font-size: 24px;
+  padding: 0px;
 }
 
 .textarea-wrapper .actions {
   position: relative;
   display: flex;
   justify-content: space-between;
+  padding: 0 4px;
 }
 
 .textarea-wrapper .form-control:focus {
@@ -59,6 +74,6 @@ h2 {
   border: 0;
 }
 
-.textarea-wrapper .actions svg {
+.textarea-wrapper svg {
   fill: rgb(95, 99, 104);
 }

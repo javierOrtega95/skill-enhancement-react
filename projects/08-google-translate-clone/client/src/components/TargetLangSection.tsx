@@ -46,12 +46,14 @@ export function TargetLangSection ({
       />
 
       <div className='textarea-wrapper disabled'>
-        <TextArea
-          loading={loading}
-          type={SectionType.To}
-          value={result}
-          onChange={setResult}
-        />
+        <div className='input-wrapper'>
+          <TextArea
+            loading={loading}
+            type={SectionType.To}
+            value={result}
+            onChange={setResult}
+          />
+        </div>
 
         <div className='actions'>
           <Tooltip text='Listen'>
@@ -63,6 +65,7 @@ export function TargetLangSection ({
               <VolumeIcon />
             </Button>
           </Tooltip>
+
           <Tooltip text='Copy to clipboard'>
             <Button
               variant='link'
@@ -72,6 +75,7 @@ export function TargetLangSection ({
               <ClipBoardIcon />
             </Button>
           </Tooltip>
+
         </div>
       </div>
     </Stack>

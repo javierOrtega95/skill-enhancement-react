@@ -1,7 +1,7 @@
 import { Button, Stack } from 'react-bootstrap'
 import { SectionType, type SourceLanguage } from '../types.d'
 import { LanguageSelector } from './LanguageSelector'
-import { VolumeIcon } from './Icons'
+import { CloseIcon, VolumeIcon } from './Icons'
 import Tooltip from './tooltip/Tooltip'
 import { useSpeech } from '../hooks/useSpeech'
 import TextArea from './TextArea'
@@ -14,13 +14,22 @@ interface Props {
   setFromText: (text: string) => void
 }
 
-export function SourceLangSection ({ sourceLanguage, setSourceLanguage, fromText, setFromText }: Props) {
+export function SourceLangSection ({
+  sourceLanguage,
+  setSourceLanguage,
+  fromText,
+  setFromText
+}: Props) {
   const { handleSpeak } = useSpeech({ text: fromText, lang: sourceLanguage })
 
   const textAreaRef = useRef<HTMLTextAreaElement>(null)
 
   const handleWrapperClick = () => {
     textAreaRef.current?.focus()
+  }
+
+  const handleRemoveTextClick = () => {
+    setFromText('')
   }
 
   return (
@@ -32,12 +41,25 @@ export function SourceLangSection ({ sourceLanguage, setSourceLanguage, fromText
       />
 
       <div className='textarea-wrapper' onClick={handleWrapperClick}>
-        <TextArea
-          ref={textAreaRef}
-          type={SectionType.From}
-          value={fromText}
-          onChange={setFromText}
-        />
+        <div className='input-wrapper'>
+          <TextArea
+            ref={textAreaRef}
+            type={SectionType.From}
+            value={fromText}
+            onChange={setFromText}
+          />
+        </div>
+
+        {Boolean(fromText) && (
+          <div className='remove-btn'>
+            <Tooltip text='Clear source text'>
+              <Button variant='link' onClick={handleRemoveTextClick}>
+                <CloseIcon />
+              </Button>
+            </Tooltip>
+          </div>
+        )}
+
         <div className='actions'>
           <Tooltip text='Listen'>
             <Button
@@ -47,9 +69,9 @@ export function SourceLangSection ({ sourceLanguage, setSourceLanguage, fromText
             >
               <VolumeIcon />
             </Button>
-
           </Tooltip>
         </div>
+
       </div>
     </Stack>
   )
