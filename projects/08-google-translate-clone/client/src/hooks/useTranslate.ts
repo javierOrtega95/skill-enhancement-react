@@ -1,8 +1,8 @@
 import { useEffect, useReducer } from 'react'
-import { initialState, translatorReducer } from '../reducer/translator'
-import { type SourceLanguage, type Language } from '../types'
-import { useDebounce } from './useDebounce'
+import { translatorInitialState, translatorReducer } from '../reducer/translator'
 import { translate } from '../services/translate'
+import { type Language, type SourceLanguage } from '../types'
+import { useDebounce } from './useDebounce'
 
 export function useTranslate () {
   const [{
@@ -11,7 +11,7 @@ export function useTranslate () {
     fromText,
     result,
     loading
-  }, dispatch] = useReducer(translatorReducer, initialState)
+  }, dispatch] = useReducer(translatorReducer, translatorInitialState)
 
   const interchangeLanguages = () => {
     dispatch({ type: 'INTERCHANGE_LANGUAGES' })
