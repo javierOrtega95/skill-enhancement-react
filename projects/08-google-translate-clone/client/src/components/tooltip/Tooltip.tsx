@@ -10,16 +10,16 @@ interface Props {
 
 const Tooltip = ({ text, children, delay, position = 'bottom' }: Props) => {
   const [active, setActive] = useState(false)
-  let timeout: number
+  let timer: ReturnType<typeof setTimeout>
 
   const showTip = () => {
-    timeout = setTimeout(() => {
+    timer = setTimeout(() => {
       setActive(true)
     }, delay ?? 300)
   }
 
   const hideTip = () => {
-    clearInterval(timeout)
+    clearInterval(timer)
     setActive(false)
   }
 
