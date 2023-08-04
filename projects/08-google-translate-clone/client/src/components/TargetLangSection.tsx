@@ -37,6 +37,8 @@ export function TargetLangSection ({
       })
   }
 
+  const showActions = Boolean(result)
+
   return (
     <Stack gap={2}>
       <LanguageSelector
@@ -55,28 +57,29 @@ export function TargetLangSection ({
           />
         </div>
 
-        <div className='actions'>
-          <Tooltip text='Listen'>
-            <Button
-              variant='link'
-              disabled={result === ''}
-              onClick={handleSpeak}
-            >
-              <VolumeIcon />
-            </Button>
-          </Tooltip>
+        {showActions && (
+          <div className='actions'>
+            <Tooltip text='Listen'>
+              <Button
+                variant='link'
+                disabled={result === ''}
+                onClick={handleSpeak}
+              >
+                <VolumeIcon />
+              </Button>
+            </Tooltip>
 
-          <Tooltip text='Copy to clipboard'>
-            <Button
-              variant='link'
-              onClick={handleClipboard}
-              disabled={result === ''}
-            >
-              <ClipBoardIcon />
-            </Button>
-          </Tooltip>
-
-        </div>
+            <Tooltip text='Copy to clipboard'>
+              <Button
+                variant='link'
+                onClick={handleClipboard}
+                disabled={result === ''}
+              >
+                <ClipBoardIcon />
+              </Button>
+            </Tooltip>
+          </div>
+        )}
       </div>
     </Stack>
   )

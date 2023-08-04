@@ -32,6 +32,8 @@ export function SourceLangSection ({
     setFromText('')
   }
 
+  const showActions = Boolean(fromText)
+
   return (
     <Stack gap={2}>
       <LanguageSelector
@@ -50,7 +52,7 @@ export function SourceLangSection ({
           />
         </div>
 
-        {Boolean(fromText) && (
+        {showActions && (
           <div className='remove-btn'>
             <Tooltip text='Clear source text'>
               <Button variant='link' onClick={handleRemoveTextClick}>
@@ -60,18 +62,19 @@ export function SourceLangSection ({
           </div>
         )}
 
-        <div className='actions'>
-          <Tooltip text='Listen'>
-            <Button
-              variant='link'
-              disabled={fromText === '' || sourceLanguage === 'auto'}
-              onClick={handleSpeak}
-            >
-              <VolumeIcon />
-            </Button>
-          </Tooltip>
-        </div>
-
+        {showActions && (
+          <div className='actions'>
+            <Tooltip text='Listen'>
+              <Button
+                variant='link'
+                disabled={fromText === '' || sourceLanguage === 'auto'}
+                onClick={handleSpeak}
+              >
+                <VolumeIcon />
+              </Button>
+            </Tooltip>
+          </div>
+        )}
       </div>
     </Stack>
   )
