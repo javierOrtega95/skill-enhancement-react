@@ -10,22 +10,13 @@ import {
   TableRow,
   Title,
 } from "@tremor/react";
-
-const users: {
-  id: string;
-  name: string;
-  email: string;
-  github: string;
-}[] = [
-  {
-    id: "1",
-    name: "Javier Ortega",
-    email: "javierortegaweb@gmail.com",
-    github: "javierOrtega95",
-  },
-];
+import { useAppSelector } from "../hooks/store";
+import { useUserActions } from "../hooks/useUserActions";
 
 export default function ListOfUsers() {
+  const users = useAppSelector((state) => state.users);
+  const { removeUser } = useUserActions();
+
   return (
     <Card>
       <Flex justifyContent="start" className="space-x-2">
@@ -43,9 +34,9 @@ export default function ListOfUsers() {
         </TableHead>
 
         <TableBody>
-          {users.map((item) => (
-            <TableRow key={item.name}>
-              <TableCell>{item.id}</TableCell>
+          {users.map((user) => (
+            <TableRow key={user.name}>
+              <TableCell>{user.id}</TableCell>
               <TableCell style={{ display: "flex", alignItems: "center" }}>
                 <img
                   style={{
@@ -54,12 +45,12 @@ export default function ListOfUsers() {
                     borderRadius: "50%",
                     marginRight: "8px",
                   }}
-                  src={`https://unavatar.io/github/${item.github}`}
-                  alt={item.name}
+                  src={`https://unavatar.io/github/${user.github}`}
+                  alt={user.name}
                 />
-                {item.name}
+                {user.name}
               </TableCell>
-              <TableCell>{item.email}</TableCell>
+              <TableCell>{user.email}</TableCell>
               <TableCell>
                 <button type="button">
                   <svg
@@ -78,7 +69,7 @@ export default function ListOfUsers() {
                     />
                   </svg>
                 </button>
-                <button onClick={() => {}} type="button">
+                <button onClick={() => removeUser(user.id)} type="button">
                   <svg
                     aria-label="Remove element"
                     xmlns="http://www.w3.org/2000/svg"

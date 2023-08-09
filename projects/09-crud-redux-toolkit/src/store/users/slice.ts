@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 const DEFAULT_STATE = [
   {
@@ -6,6 +6,12 @@ const DEFAULT_STATE = [
     name: "Javier Ortega",
     email: "javierortegaweb@gmail.com",
     github: "javierOrtega95",
+  },
+  {
+    id: "2",
+    name: "Alicia Rebollo",
+    email: "laRebo@gmail.com",
+    github: "aliciarebo",
   },
 ];
 
@@ -29,7 +35,14 @@ const initialState: UserWithId[] = (() => {
 export const usersSlice = createSlice({
   name: "users",
   initialState,
-  reducers: {},
+  reducers: {
+    deleteUserById: (state, action: PayloadAction<UserId>) => {
+      const id = action.payload;
+      return state.filter((user) => user.id !== id);
+    },
+  },
 });
 
 export default usersSlice.reducer;
+
+export const { deleteUserById } = usersSlice.actions;
