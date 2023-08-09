@@ -18,7 +18,7 @@ export default function ListOfUsers() {
   const { removeUser } = useUserActions();
 
   return (
-    <Card>
+    <Card className="mt-3">
       <Flex justifyContent="start" className="space-x-2">
         <Title>Users</Title>
         <Badge>{users.length}</Badge>
