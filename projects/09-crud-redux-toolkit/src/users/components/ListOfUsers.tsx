@@ -139,7 +139,7 @@ export default function ListOfUsers() {
         </Table>
       </Card>
       <UserModal
-        initialOpen={openUserModal}
+        open={openUserModal}
         user={userRef.current}
         onClose={handleCloseUserModal}
       />

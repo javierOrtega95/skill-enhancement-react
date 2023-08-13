@@ -1,21 +1,14 @@
 import { Button, Card, Flex, TextInput, Title } from "@tremor/react";
-import { useEffect, useState } from "react";
 import { Modal } from "../../components/Modal";
 import { UserWithId } from "../store/slice";
 
 interface Props {
-  initialOpen: boolean;
+  open: boolean;
   user?: UserWithId;
   onClose: () => void;
 }
 
-export function UserModal({ user, initialOpen, onClose }: Props) {
-  const [open, setOpen] = useState(initialOpen);
-
-  useEffect(() => {
-    setOpen(initialOpen);
-  }, [initialOpen]);
-
+export function UserModal({ open, user, onClose }: Props) {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
@@ -29,7 +22,7 @@ export function UserModal({ user, initialOpen, onClose }: Props) {
       github: formData.get("github") as string,
     };
 
-    setOpen(false);
+    onClose();
   };
 
   return (
