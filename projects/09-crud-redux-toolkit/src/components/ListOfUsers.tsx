@@ -92,6 +92,7 @@ export default function ListOfUsers() {
                   <button
                     type="button"
                     onClick={() => handleOpenUserModal(user)}
+                    className="hover:text-tremor-brand"
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -109,7 +110,11 @@ export default function ListOfUsers() {
                       />
                     </svg>
                   </button>
-                  <button onClick={() => removeUser(user.id)} type="button">
+                  <button
+                    onClick={() => removeUser(user.id)}
+                    type="button"
+                    className="hover:text-red-600"
+                  >
                     <svg
                       aria-label="Remove element"
                       xmlns="http://www.w3.org/2000/svg"

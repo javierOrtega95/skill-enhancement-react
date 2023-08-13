@@ -95,9 +95,7 @@ export function UserModal({ user, initialOpen, onClose }: Props) {
               />
 
               <Flex justifyContent="start">
-                <Button type="submit" variant="secondary">
-                  {user ? "Update" : "Submit"}
-                </Button>
+                <Button type="submit">{user ? "Update" : "Submit"}</Button>
                 <Button
                   type="button"
                   variant="secondary"
