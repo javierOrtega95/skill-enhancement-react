@@ -12,9 +12,9 @@ import {
   Title,
 } from "@tremor/react";
 import { useRef, useState } from "react";
-import { useAppSelector } from "../hooks/store";
+import { useAppSelector } from "../../store/hooks/store";
 import { useUserActions } from "../hooks/useUserActions";
-import { UserWithId } from "../store/users/slice";
+import { UserWithId } from "../store/slice";
 import { UserModal } from "./UserModal";
 
 export default function ListOfUsers() {

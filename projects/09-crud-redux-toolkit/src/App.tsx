@@ -1,6 +1,6 @@
 import { Title } from "@tremor/react";
 import "./App.css";
-import ListOfUsers from "./components/ListOfUsers";
+import ListOfUsers from "./users/components/ListOfUsers";
 
 function App() {
   return (

@@ -1,5 +1,5 @@
 import { configureStore, type Middleware } from "@reduxjs/toolkit";
-import usersReducer from "./users/slice";
+import usersReducer from "../users/store/slice";
 
 const persistanceLocalStorageMiddleware: Middleware =
   (store) => (next) => (action) => {
