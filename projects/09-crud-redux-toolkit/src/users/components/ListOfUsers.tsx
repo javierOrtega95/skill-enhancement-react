@@ -13,25 +13,37 @@ import {
 } from "@tremor/react";
 import { useRef, useState } from "react";
 import { useAppSelector } from "../../store/hooks/store";
-import { useUserActions } from "../hooks/useUserActions";
 import { UserWithId } from "../store/slice";
-import { UserModal } from "./UserModal";
+import { DeleteUser } from "./DeleteUser";
+import { UserForm } from "./UserForm";
 
 export default function ListOfUsers() {
   const users = useAppSelector((state) => state.users);
-  const { removeUser } = useUserActions();
 
-  const [openUserModal, setOpenUserModal] = useState(false);
+  const [openUserForm, setOpenUserForm] = useState(false);
+  const [openDeleteUser, setOpenDeleteUser] = useState(false);
+
   const userRef = useRef<UserWithId>();
+  const userId = useRef<string>("");
 
-  const handleOpenUserModal = (user?: UserWithId) => {
+  const handleOpenUserForm = (user?: UserWithId) => {
     userRef.current = user;
-    setOpenUserModal(true);
+    setOpenUserForm(true);
   };
 
-  const handleCloseUserModal = () => {
+  const handleCloseUserForm = () => {
     userRef.current = undefined;
-    setOpenUserModal(false);
+    setOpenUserForm(false);
+  };
+
+  const handleOpenDeleteUser = (id: string) => {
+    userId.current = id;
+    setOpenDeleteUser(true);
+  };
+
+  const handleCloseDeleteUser = () => {
+    userId.current = "";
+    setOpenDeleteUser(false);
   };
 
   return (
@@ -42,7 +54,7 @@ export default function ListOfUsers() {
             <Title>Users</Title>
             <Badge className="ml-3">{users.length}</Badge>
           </Flex>
-          <Button variant="light" onClick={() => handleOpenUserModal()}>
+          <Button variant="light" onClick={() => handleOpenUserForm()}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -91,7 +103,7 @@ export default function ListOfUsers() {
                 <TableCell>
                   <button
                     type="button"
-                    onClick={() => handleOpenUserModal(user)}
+                    onClick={() => handleOpenUserForm(user)}
                     className="hover:text-tremor-brand"
                   >
                     <svg
@@ -111,7 +123,7 @@ export default function ListOfUsers() {
                     </svg>
                   </button>
                   <button
-                    onClick={() => removeUser(user.id)}
+                    onClick={() => handleOpenDeleteUser(user.id)}
                     type="button"
                     className="hover:text-red-600"
                   >
@@ -138,10 +150,15 @@ export default function ListOfUsers() {
           </TableBody>
         </Table>
       </Card>
-      <UserModal
-        open={openUserModal}
+      <UserForm
+        open={openUserForm}
         user={userRef.current}
-        onClose={handleCloseUserModal}
+        onClose={handleCloseUserForm}
+      />
+      <DeleteUser
+        open={openDeleteUser}
+        userId={userId.current}
+        onClose={handleCloseDeleteUser}
       />
     </>
   );

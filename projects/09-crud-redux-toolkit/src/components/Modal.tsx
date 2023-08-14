@@ -1,4 +1,4 @@
-import { Button } from "@tremor/react";
+import { Button, Card } from "@tremor/react";
 import { useEffect } from "react";
 
 interface Props {
@@ -43,31 +43,33 @@ export function Modal({ open, onClose, children }: Props) {
           }}
           onKeyPress={() => {}}
         >
-          {children}
-          <Button
-            type="button"
-            variant="light"
-            className="cursor-pointer absolute top-0 right-0 mt-4 mr-5 text-gray-400 hover:text-gray-600 transition duration-150 ease-in-out rounded focus:ring-2 focus:outline-none focus:ring-gray-600"
-            aria-label="close modal"
-            role="button"
-            onClick={handleCloseModal}
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              className="w-6 h-6"
+          <Card>
+            {children}
+            <Button
+              type="button"
+              variant="light"
+              className="cursor-pointer absolute top-0 right-0 mt-4 mr-5 text-gray-400 hover:text-gray-600 transition duration-150 ease-in-out rounded focus:ring-2 focus:outline-none focus:ring-gray-600"
+              aria-label="close modal"
+              role="button"
+              onClick={handleCloseModal}
             >
-              <title>Close modal</title>
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M6 18L18 6M6 6l12 12"
-              />
-            </svg>
-          </Button>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="w-6 h-6"
+              >
+                <title>Close modal</title>
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            </Button>
+          </Card>
         </div>
       </div>
     </>
