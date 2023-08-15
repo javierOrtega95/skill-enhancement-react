@@ -10,6 +10,11 @@ interface Props {
 export function DeleteUser({ userId, open, onClose }: Props) {
   const { removeUser } = useUserActions();
 
+  const handleDelete = () => {
+    removeUser(userId);
+    onClose();
+  };
+
   return (
     <Modal open={open} onClose={onClose}>
       <div className="bg-white p-3">
@@ -36,7 +41,7 @@ export function DeleteUser({ userId, open, onClose }: Props) {
               className="text-base font-semibold leading-6 text-gray-900"
               id="modal-title"
             >
-              Delete User
+              Delete user
             </h3>
             <div className="mt-2">
               <p className="text-sm text-gray-500">
@@ -51,6 +56,7 @@ export function DeleteUser({ userId, open, onClose }: Props) {
         <button
           type="button"
           className="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto"
+          onClick={handleDelete}
         >
           Delete
         </button>
