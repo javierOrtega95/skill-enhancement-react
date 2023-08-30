@@ -2,13 +2,13 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 const DEFAULT_STATE = [
   {
-    id: "1",
+    id: crypto.randomUUID(),
     name: "Javier Ortega",
     email: "javierortegaweb@gmail.com",
     github: "javierOrtega95",
   },
   {
-    id: "2",
+    id: crypto.randomUUID(),
     name: "Alicia Rebollo",
     email: "laRebo@gmail.com",
     github: "aliciarebo",
@@ -36,6 +36,18 @@ export const usersSlice = createSlice({
   name: "users",
   initialState,
   reducers: {
+    addNewUser: (state, action: PayloadAction<UserWithId>) => {
+      state.push(action.payload);
+    },
+    updateUser: (state, action: PayloadAction<UserWithId>) => {
+      const { id, name, email, github } = action.payload;
+      const existingUser = state.find((user) => user.id === id);
+      if (existingUser) {
+        existingUser.name = name;
+        existingUser.email = email;
+        existingUser.github = github;
+      }
+    },
     deleteUserById: (state, action: PayloadAction<UserId>) => {
       const id = action.payload;
       return state.filter((user) => user.id !== id);
@@ -45,4 +57,4 @@ export const usersSlice = createSlice({
 
 export default usersSlice.reducer;
 
-export const { deleteUserById } = usersSlice.actions;
+export const { addNewUser, updateUser, deleteUserById } = usersSlice.actions;

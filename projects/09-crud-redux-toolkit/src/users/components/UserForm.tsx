@@ -1,5 +1,6 @@
 import { Button, Flex, TextInput, Title } from "@tremor/react";
 import { Modal } from "../../components/Modal";
+import { useUserActions } from "../hooks/useUserActions";
 import { UserWithId } from "../store/slice";
 
 interface Props {
@@ -9,6 +10,8 @@ interface Props {
 }
 
 export function UserForm({ open, user, onClose }: Props) {
+  const { addUser, editUser } = useUserActions();
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
@@ -16,11 +19,13 @@ export function UserForm({ open, user, onClose }: Props) {
     const formData = new FormData(form);
 
     const newUser = {
-      id: user ? user.id : crypto.randomUUID(),
+      id: user?.id || crypto.randomUUID(),
       name: formData.get("name") as string,
       email: formData.get("email") as string,
       github: formData.get("github") as string,
     };
+
+    user ? editUser(newUser) : addUser(newUser);
 
     onClose();
   };
