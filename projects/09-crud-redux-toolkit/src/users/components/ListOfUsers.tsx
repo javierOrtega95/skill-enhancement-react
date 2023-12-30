@@ -156,7 +156,7 @@ export default function ListOfUsers() {
         user={userRef.current}
         onClose={handleCloseUserForm}
       />
-      
+
       <DeleteUser
         open={openDeleteUser}
         userId={userId.current}
