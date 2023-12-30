@@ -1,8 +1,9 @@
 import { Modal } from "../../components/Modal";
 import { useUserActions } from "../hooks/useUserActions";
+import { type UserId } from "../types";
 
 interface Props {
-  userId: string;
+  userId: UserId;
   open: boolean;
   onClose: () => void;
 }

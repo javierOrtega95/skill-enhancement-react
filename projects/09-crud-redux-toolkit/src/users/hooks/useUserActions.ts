@@ -1,11 +1,10 @@
 import { useAppDispatch } from "../../store/hooks/store";
 import {
-  UserId,
-  UserWithId,
   addNewUser,
   deleteUserById,
   updateUser,
 } from "../store/slice";
+import { type UserId, type UserWithId } from "../types";
 
 export const useUserActions = () => {
   const dispatch = useAppDispatch();

@@ -1,7 +1,7 @@
 import { Button, Flex, TextInput, Title } from "@tremor/react";
 import { Modal } from "../../components/Modal";
 import { useUserActions } from "../hooks/useUserActions";
-import { UserWithId } from "../store/slice";
+import { type UserWithId } from "../types";
 
 interface Props {
   open: boolean;
@@ -19,7 +19,7 @@ export function UserForm({ open, user, onClose }: Props) {
     const formData = new FormData(form);
 
     const newUser = {
-      id: user?.id || crypto.randomUUID(),
+      id: user?.id ?? crypto.randomUUID(),
       name: formData.get("name") as string,
       email: formData.get("email") as string,
       github: formData.get("github") as string,

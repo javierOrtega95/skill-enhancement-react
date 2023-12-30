@@ -13,7 +13,7 @@ import {
 } from "@tremor/react";
 import { useRef, useState } from "react";
 import { useAppSelector } from "../../store/hooks/store";
-import { UserWithId } from "../store/slice";
+import { type UserWithId } from "../types";
 import { DeleteUser } from "./DeleteUser";
 import { UserForm } from "./UserForm";
 
@@ -150,11 +150,13 @@ export default function ListOfUsers() {
           </TableBody>
         </Table>
       </Card>
+
       <UserForm
         open={openUserForm}
         user={userRef.current}
         onClose={handleCloseUserForm}
       />
+      
       <DeleteUser
         open={openDeleteUser}
         userId={userId.current}

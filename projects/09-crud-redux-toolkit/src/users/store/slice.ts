@@ -1,4 +1,5 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { type UserId, type UserWithId } from "../types";
 
 const DEFAULT_STATE = [
   {
@@ -14,18 +15,6 @@ const DEFAULT_STATE = [
     github: "aliciarebo",
   },
 ];
-
-export type UserId = string;
-
-export interface User {
-  name: string;
-  email: string;
-  github: string;
-}
-
-export interface UserWithId extends User {
-  id: UserId;
-}
 
 const initialState: UserWithId[] = (() => {
   const persistedState = localStorage.getItem("__redux__state__");
