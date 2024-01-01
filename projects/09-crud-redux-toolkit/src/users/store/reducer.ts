@@ -8,14 +8,6 @@ export function handleAddNewUser(
   state.push(action.payload);
 }
 
-export function handleRollbackNewUser(
-  state: UserWithId[],
-  action: PayloadAction<UserWithId>,
-) {
-  const { id } = action.payload;
-  return state.filter((user) => user.id !== id);
-}
-
 export function handleUpdateUser(
   state: UserWithId[],
   action: PayloadAction<UserWithId>,
