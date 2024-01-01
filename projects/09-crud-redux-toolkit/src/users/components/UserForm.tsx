@@ -59,7 +59,7 @@ export function UserForm({ open, user, onClose }: Props) {
           />
 
           <Flex justifyContent="start">
-            <Button type="submit">{user ? "Update" : "Submit"}</Button>
+            <Button type="submit">{user ? "Update" : "Create"}</Button>
             <Button
               type="button"
               variant="secondary"
