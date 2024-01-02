@@ -25,6 +25,7 @@ module.exports = {
     'react/react-in-jsx-scope': 'off',
     '@typescript-eslint/non-nullable-type-assertion-style': 'off',
     '@typescript-eslint/triple-slash-reference': 'off',
+    '@typescript-eslint/method-signature-style': 'off',
   },
   ignorePatterns: ['.eslintrc.cjs', 'vite.config.ts'],
 };

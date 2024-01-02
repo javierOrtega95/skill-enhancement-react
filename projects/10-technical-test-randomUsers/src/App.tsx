@@ -3,10 +3,17 @@ import './App.css'
 import { API_URL } from './config'
 import { UsersList } from './components/UsersList'
 
+declare global {
+  interface Array<T> {
+    toSorted(compareFn?: (a: T, b: T) => number): T[]
+  }
+}
+
 function App () {
   const [users, setUsers] = useState<User[]>([])
   const [colorRows, setColorRows] = useState(false)
   const [filterCountry, setFilterCountry] = useState<string>('')
+  const [sortByCountry, setSortByCountry] = useState(false)
 
   const initialUsers = useRef<User[]>([])
 
@@ -31,9 +38,19 @@ function App () {
     setUsers(newUsers)
   }
 
+  const toggleSortByCountry = () => {
+    setSortByCountry(!sortByCountry)
+  }
+
   const filteredUsers = users.filter(user => {
     return user.location.country.toLowerCase().includes(filterCountry.toLowerCase())
   })
+
+  const sortedUsers = sortByCountry
+    ? filteredUsers.toSorted((a: User, b: User) => {
+      return a.location.country.localeCompare(b.location.country)
+    })
+    : filteredUsers
 
   return (
     <>
@@ -41,6 +58,10 @@ function App () {
       <header>
         <button onClick={toggleColors}>
           Color rows: {colorRows ? 'on' : 'off'}
+        </button>
+
+        <button onClick={toggleSortByCountry}>
+          Sort by country: {sortByCountry ? 'on' : 'off'}
         </button>
 
         <button onClick={() => { setUsers(initialUsers.current) }}>
@@ -55,7 +76,7 @@ function App () {
 
       </header>
       <main>
-        <UsersList users={filteredUsers} colorRows={colorRows} onDeleteUser={handleDeleteUser} />
+        <UsersList users={sortedUsers} colorRows={colorRows} onDeleteUser={handleDeleteUser} />
       </main>
     </>
   )
