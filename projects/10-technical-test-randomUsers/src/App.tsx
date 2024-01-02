@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import './App.css'
 import { API_URL } from './config'
 import { UsersList } from './components/UsersList'
@@ -46,11 +46,13 @@ function App () {
     return user.location.country.toLowerCase().includes(filterCountry.toLowerCase())
   })
 
-  const sortedUsers = sortByCountry
-    ? filteredUsers.toSorted((a: User, b: User) => {
+  const sortedUsers = useMemo(() => {
+    if (!sortByCountry) return filteredUsers
+
+    return filteredUsers.toSorted((a: User, b: User) => {
       return a.location.country.localeCompare(b.location.country)
     })
-    : filteredUsers
+  }, [sortByCountry, filteredUsers])
 
   return (
     <>
@@ -69,11 +71,10 @@ function App () {
         </button>
 
         <input
-          placeholder='Filter by counstry' onChange={(e) => {
+          placeholder='Filter by country' onChange={(e) => {
             setFilterCountry(e.target.value)
           }}
         />
-
       </header>
       <main>
         <UsersList users={sortedUsers} colorRows={colorRows} onDeleteUser={handleDeleteUser} />
