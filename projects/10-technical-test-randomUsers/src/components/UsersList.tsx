@@ -1,9 +1,10 @@
 interface Props {
   users: User[]
   colorRows: boolean
+  onDeleteUser: (email: string) => void
 }
 
-export function UsersList ({ users, colorRows }: Props) {
+export function UsersList ({ users, colorRows, onDeleteUser }: Props) {
   return (
     <table width='100%'>
       <thead>
@@ -22,7 +23,7 @@ export function UsersList ({ users, colorRows }: Props) {
             <td>{user.name.first}</td>
             <td>{user.name.last}</td>
             <td>{user.location.country}</td>
-            <td><button>Delete</button></td>
+            <td><button onClick={() => { onDeleteUser(user.email) }}>Delete</button></td>
           </tr>
         )
         )}

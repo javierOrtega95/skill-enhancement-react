@@ -22,6 +22,11 @@ function App () {
     setColorRows(!colorRows)
   }
 
+  const handleDeleteUser = (email: string) => {
+    const newUsers = users.filter(user => user.email !== email)
+    setUsers(newUsers)
+  }
+
   return (
     <>
       <h1>Technical test: random users</h1>
@@ -31,7 +36,7 @@ function App () {
         </button>
       </header>
       <main>
-        <UsersList users={users} colorRows={colorRows} />
+        <UsersList users={users} colorRows={colorRows} onDeleteUser={handleDeleteUser} />
       </main>
     </>
   )
