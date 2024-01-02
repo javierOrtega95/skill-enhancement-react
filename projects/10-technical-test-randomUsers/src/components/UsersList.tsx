@@ -1,8 +1,9 @@
 interface Props {
   users: User[]
+  colorRows: boolean
 }
 
-export function UsersList ({ users }: Props) {
+export function UsersList ({ users, colorRows }: Props) {
   return (
     <table width='100%'>
       <thead>
@@ -14,18 +15,17 @@ export function UsersList ({ users }: Props) {
           <th>Actions</th>
         </tr>
       </thead>
-      <tbody>
-        {users.map(user => {
-          return (
-            <tr key={user.email}>
-              <td><img src={user.picture.thumbnail} /></td>
-              <td>{user.name.first}</td>
-              <td>{user.name.last}</td>
-              <td>{user.location.country}</td>
-              <td><button>Delete</button></td>
-            </tr>
-          )
-        })}
+      <tbody className={colorRows ? 'table--showColors' : ''}>
+        {users.map(user => (
+          <tr key={user.email}>
+            <td><img src={user.picture.thumbnail} /></td>
+            <td>{user.name.first}</td>
+            <td>{user.name.last}</td>
+            <td>{user.location.country}</td>
+            <td><button>Delete</button></td>
+          </tr>
+        )
+        )}
       </tbody>
     </table>
   )

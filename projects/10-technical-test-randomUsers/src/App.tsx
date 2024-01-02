@@ -5,6 +5,7 @@ import { UsersList } from './components/UsersList'
 
 function App () {
   const [users, setUsers] = useState<User[]>([])
+  const [colorRows, setColorRows] = useState(false)
 
   useEffect(() => {
     fetch(`${API_URL}/?results=100`)
@@ -17,11 +18,20 @@ function App () {
       })
   }, [])
 
+  const toggleColors = () => {
+    setColorRows(!colorRows)
+  }
+
   return (
     <>
       <h1>Technical test: random users</h1>
+      <header>
+        <button onClick={toggleColors}>
+          Color rows: {colorRows ? 'on' : 'off'}
+        </button>
+      </header>
       <main>
-        <UsersList users={users} />
+        <UsersList users={users} colorRows={colorRows} />
       </main>
     </>
   )
