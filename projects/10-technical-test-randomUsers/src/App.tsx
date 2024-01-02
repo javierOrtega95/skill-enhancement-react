@@ -6,6 +6,8 @@ import { UsersList } from './components/UsersList'
 function App () {
   const [users, setUsers] = useState<User[]>([])
   const [colorRows, setColorRows] = useState(false)
+  const [filterCountry, setFilterCountry] = useState<string>('')
+
   const initialUsers = useRef<User[]>([])
 
   useEffect(() => {
@@ -29,6 +31,10 @@ function App () {
     setUsers(newUsers)
   }
 
+  const filteredUsers = users.filter(user => {
+    return user.location.country.toLowerCase().includes(filterCountry.toLowerCase())
+  })
+
   return (
     <>
       <h1>Technical test: random users</h1>
@@ -41,9 +47,15 @@ function App () {
           Restore state
         </button>
 
+        <input
+          placeholder='Filter by counstry' onChange={(e) => {
+            setFilterCountry(e.target.value)
+          }}
+        />
+
       </header>
       <main>
-        <UsersList users={users} colorRows={colorRows} onDeleteUser={handleDeleteUser} />
+        <UsersList users={filteredUsers} colorRows={colorRows} onDeleteUser={handleDeleteUser} />
       </main>
     </>
   )
