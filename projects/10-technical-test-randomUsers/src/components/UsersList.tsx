@@ -1,18 +1,21 @@
+import { SortBy } from '../App'
+
 interface Props {
   users: User[]
   colorRows: boolean
   onDeleteUser: (email: string) => void
+  onSort: (sort: SortBy) => void
 }
 
-export function UsersList ({ users, colorRows, onDeleteUser }: Props) {
+export function UsersList ({ users, colorRows, onDeleteUser, onSort }: Props) {
   return (
     <table width='100%'>
       <thead>
         <tr>
           <th>Photo</th>
-          <th>Name</th>
-          <th>Lastname</th>
-          <th>Country</th>
+          <th className='pointer' onClick={() => { onSort(SortBy.NAME) }}>Name</th>
+          <th className='pointer' onClick={() => { onSort(SortBy.LAST) }}>Lastname</th>
+          <th className='pointer' onClick={() => { onSort(SortBy.COUNTRY) }}>Country</th>
           <th>Actions</th>
         </tr>
       </thead>

@@ -9,11 +9,18 @@ declare global {
   }
 }
 
+export enum SortBy {
+  NONE = 'none',
+  NAME = 'name',
+  LAST = 'last',
+  COUNTRY = 'country',
+}
+
 function App () {
   const [users, setUsers] = useState<User[]>([])
   const [colorRows, setColorRows] = useState(false)
   const [filterCountry, setFilterCountry] = useState<string>('')
-  const [sortByCountry, setSortByCountry] = useState(false)
+  const [sortBy, setSortBy] = useState<SortBy>(SortBy.NONE)
 
   const initialUsers = useRef<User[]>([])
 
@@ -39,20 +46,33 @@ function App () {
   }
 
   const toggleSortByCountry = () => {
-    setSortByCountry(!sortByCountry)
+    setSortBy(sortBy === SortBy.NONE ? SortBy.COUNTRY : SortBy.NONE)
   }
 
-  const filteredUsers = users.filter(user => {
-    return user.location.country.toLowerCase().includes(filterCountry.toLowerCase())
-  })
+  const handleChangeSort = (sort: SortBy) => {
+    setSortBy(sort)
+  }
+
+  const filteredUsers = useMemo(() => {
+    return users.filter(user => {
+      return user.location.country.toLowerCase().includes(filterCountry.toLowerCase())
+    })
+  }, [users, filterCountry])
 
   const sortedUsers = useMemo(() => {
-    if (!sortByCountry) return filteredUsers
+    if (sortBy === SortBy.NONE) return filteredUsers
+
+    const compareProperties: Record<string, (user: User) => string> = {
+      [SortBy.COUNTRY]: user => user.location.country,
+      [SortBy.NAME]: user => user.name.first,
+      [SortBy.LAST]: user => user.name.last
+    }
 
     return filteredUsers.toSorted((a: User, b: User) => {
-      return a.location.country.localeCompare(b.location.country)
+      const extractProperty = compareProperties[sortBy]
+      return extractProperty(a).localeCompare(extractProperty(b))
     })
-  }, [sortByCountry, filteredUsers])
+  }, [sortBy, filteredUsers])
 
   return (
     <>
@@ -63,7 +83,7 @@ function App () {
         </button>
 
         <button onClick={toggleSortByCountry}>
-          Sort by country: {sortByCountry ? 'on' : 'off'}
+          Sort by country: {sortBy === SortBy.COUNTRY ? 'on' : 'off'}
         </button>
 
         <button onClick={() => { setUsers(initialUsers.current) }}>
@@ -77,7 +97,7 @@ function App () {
         />
       </header>
       <main>
-        <UsersList users={sortedUsers} colorRows={colorRows} onDeleteUser={handleDeleteUser} />
+        <UsersList users={sortedUsers} colorRows={colorRows} onDeleteUser={handleDeleteUser} onSort={handleChangeSort} />
       </main>
     </>
   )
