@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import './App.css'
 import { API_URL } from './config'
+import { UsersList } from './components/UsersList'
 
 function App () {
   const [users, setUsers] = useState<User[]>([])
@@ -19,7 +20,9 @@ function App () {
   return (
     <>
       <h1>Technical test: random users</h1>
-      {JSON.stringify(users)}
+      <main>
+        <UsersList users={users} />
+      </main>
     </>
   )
 }
