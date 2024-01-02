@@ -18,7 +18,7 @@ export function UsersList ({ users, colorRows, onDeleteUser }: Props) {
       </thead>
       <tbody className={colorRows ? 'table--showColors' : ''}>
         {users.map(user => (
-          <tr key={user.email}>
+          <tr key={user.login.uuid}>
             <td><img src={user.picture.thumbnail} /></td>
             <td>{user.name.first}</td>
             <td>{user.name.last}</td>
