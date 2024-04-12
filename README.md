@@ -14,4 +14,5 @@
 - 06: [React Router Clone](projects/06-react-router-clone)
 - 07: [ToDo App with Typescript](projects/07-todo-app-ts)
 - 08: [Google Translate Clone](projects/08-google-translate-clone/client)
-   
+- 09: [CRUD with Redux Toolkit](projects/09-crud-redux-toolkit)
+- 10: [Technical test - Random Users](projects/10-technical-test-randomUsers)
